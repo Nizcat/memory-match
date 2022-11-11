@@ -8,10 +8,11 @@
     height: 10vh;
     background-color: rgba(148, 152, 151, 0.213);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 }
+
 .allImagesCss {
     background-color: aquamarine;
     display: grid;
@@ -28,5 +29,7 @@
 }
 .zeldaImage {
     width: 9em;
+    border-color: rgb(2, 17, 12);
+    border-width: 1em;
     border-radius: 20%;
 }

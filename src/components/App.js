@@ -20,17 +20,55 @@ const App = () => {
   const el = document.createElement('div');
 
   menu.className = 'App';
-  menu.textContent = 'Zelda Elements';
+  menu.textContent = 'Zelda Items';
 
-  function showZeldaMaterial() {
+  const selectItem = document.createElement('select');
+  selectItem.setAttribute('id', 'selectItem');
+  const materials = document.createElement('option');
+  materials.textContent = "Materials";
+  const monsters = document.createElement('option');
+  monsters.textContent = "Monsters";
+  const foodCreatures = document.createElement('option');
+  foodCreatures.textContent = "Food Creatures";
+  const nonFoodCreatures = document.createElement('option');
+  nonFoodCreatures.textContent = "Creatures";
+  const equipment = document.createElement('option');
+  equipment.textContent = "Equipment";
+  selectItem.add(monsters, [0]);
+  selectItem.add(materials, [1]);
+  selectItem.add(foodCreatures, [2]);
+  selectItem.add(nonFoodCreatures, [3]);
+  selectItem.add(equipment, [4]);
+  menu.append(selectItem);
+
+  var item = selectItem.value;
+
+  selectItem.addEventListener('change', function (event) {
+    item = event.target.value;
+    showZeldaMaterial(item);
+  });
+
+  function showZeldaMaterial(item) {
     bringZelda('https://botw-compendium.herokuapp.com/api/v2/all')
       .then((data) => Object.entries(data).forEach(([key, value]) => {
-        console.log(value, "allData");
-        const foodCreatures = value.monsters;
-        console.log(foodCreatures);
+        console.log(value, item, "allData");
+        let itemsType = value.monsters;
+
+        if (item == "Monsters") {
+          itemsType = value.monsters;
+        } else if (item == "Equipment") {
+          itemsType = value.equipment;
+        } else if (item == "Materials") {
+          itemsType = value.materials;
+        } else if (item == "Food Creatures") {
+          itemsType = value.creatures.food;
+        } else if (item == "Creatures") {
+          itemsType = value.creatures.non_food;
+        }
         const allImages = document.createElement('div');
         allImages.classList.add('allImagesCss');
-        foodCreatures.forEach((element) => {
+        el.innerHTML = '';
+        itemsType.forEach((element) => {
           const eachCard = document.createElement('div');
           eachCard.classList.add('eachCard');
           const zeldaImage = document.createElement('img');
@@ -46,29 +84,9 @@ const App = () => {
         all.append(menu, el);
       }))
   }
-  /*function showZeldaStaff() {
-    const allImages = document.createElement('div');
+  
 
-    
-    bringZelda('https://zelda.fanapis.com/api/characters')
-      .then((element) => element.data.forEach(character => {
-        console.log(character);
-        const eachImage = document.createElement('img');
-        eachImage.classList.add('eachImageCss');
-        eachImage.src = character.appearances;
-        allImages.append(eachImage);
-      }));
-    el.append(allImages);
-
-
-
-  }*/
-
-
-
-
-
-  showZeldaMaterial();
+  showZeldaMaterial(item);
   return all;
 
 };
