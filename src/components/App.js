@@ -21,7 +21,10 @@ const App = () => {
 
   menu.className = 'App';
   menu.textContent = 'Zelda Items';
-
+  const selectContainer = document.createElement('form');
+  selectContainer.classList.add('selectContainer');
+  const itemsLabel = document.createElement('p');
+  itemsLabel.textContent = "Items";
   const selectItem = document.createElement('select');
   selectItem.setAttribute('id', 'selectItem');
   const materials = document.createElement('option');
@@ -39,7 +42,8 @@ const App = () => {
   selectItem.add(foodCreatures, [2]);
   selectItem.add(nonFoodCreatures, [3]);
   selectItem.add(equipment, [4]);
-  menu.append(selectItem);
+  selectContainer.append(itemsLabel, selectItem)
+  menu.append(selectContainer);
 
   var item = selectItem.value;
 
